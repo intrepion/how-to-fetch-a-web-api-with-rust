@@ -34,17 +34,17 @@ async fn main() -> Result<(), ExitFailure> {
     let api_key: String;
 
     if args.len() < 2 {
-        println!("Since you didn't specify a company symbol, it has defaulted to AAPL.");
-    } else {
-        symbol = args[1].clone();
-    }
-
-    if args.len() < 3 {
         println!("You need to specify an API key");
         return Ok(());
     }
 
-    api_key = args[2].clone().to_string();
+    if args.len() < 3 {
+        println!("Since you didn't specify a company symbol, it has defaulted to AAPL.");
+    } else {
+        symbol = args[2].clone();
+    }
+
+    api_key = args[1].clone().to_string();
 
     let res = CompanyQuote::get(&symbol, &api_key).await?;
     println!("{}'s current stock price: {}", symbol, res.c);
